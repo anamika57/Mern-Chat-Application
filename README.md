@@ -110,10 +110,7 @@ backend/
    -     npm install
      
    **3.Create a .env file in the backend directory with the following variables:**
-   PORT=3000
-  MONGODB_URI=mongodb://localhost:27017/chat-app
-JWT_SECRET=your_jwt_secret
-NODE_ENV=development
+
   
 **4.Start the backend server:**
 - npm start
