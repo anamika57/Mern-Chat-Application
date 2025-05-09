@@ -109,7 +109,7 @@ backend/
    **2.Install dependencies:**
    -     npm install
      
-   **3.Create a .env file in the backend directory with the following variables:**
+   **3.Create a .env file in the backend directory**
 
   
 **4.Start the backend server:**
