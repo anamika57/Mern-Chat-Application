@@ -24,14 +24,14 @@ const Sidebar = ({ onSelectUser }) => {
 
     const nowOnline = chatUser.map((user)=>(user._id));
     //chats function
-    const isOnline = nowOnline.map((userId) => Array.isArray(onlineUser) && onlineUser.includes(userId));
+    const isOnline = nowOnline.map((userId) =>   onlineUser.includes(userId));
 
     useEffect(()=>{
         socket?.on("newMessage",(newMessage)=>{
             setNewMessageUsers(newMessage)
-            if (selectedConversation?._id !== newMessage.senderId) {
+            if (selectedConversation?._id !== newMessage.senderId._id) {
                 // Example: Toast notification ya window alert
-                toast.info("New message from " + newMessage.senderName);
+                toast.info("New message from " + newMessage.senderId.username);
               }
           
         })
@@ -215,7 +215,7 @@ const Sidebar = ({ onSelectUser }) => {
                                                     <p className='font-bold text-gray-950'>{user.username}</p>
                                                 </div>
                                                     <div>
-                                                        { newMessageUsers.reciverId === authUser._id && newMessageUsers.senderId === user._id ?
+                                                        { newMessageUsers.receiverId === authUser._id && newMessageUsers.senderId._id === user._id ?
                                                     <div className="rounded-full bg-green-700 text-sm text-white px-[4px]">+1</div>:<></>
                                                         }
                                                     </div>

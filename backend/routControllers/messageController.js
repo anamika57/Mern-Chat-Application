@@ -1,6 +1,6 @@
 const Conversation=require('../Models/conversationModels')
 const Message=require('../Models/messageSchema');
-
+const { getReceiverSocketId ,io} = require('../Socket/socket');
 const  sendMessage=async(req,res)=>{
 
     try{
@@ -34,9 +34,19 @@ chats.save(),
 newMessages.save()
 ]);
 
-//SOCKET.IO function
+// Populate sender info after save
+const populatedMessage = await newMessages.populate("senderId", "username");
 
-res.status(200).send(newMessages);
+//SOCKET.IO function
+const receiverSocketId= getReceiverSocketId(receiverId);
+if(receiverSocketId){
+  console.log("Sending message with sender:", populatedMessage.senderId); // DEBUG LOG
+  io.to(receiverSocketId).emit("newMessage",populatedMessage);
+  console.log(" populated senderId:", populatedMessage.senderId);
+
+}
+
+res.status(200).send(populatedMessage);
     }
     catch(error){
         res.status(500).send({

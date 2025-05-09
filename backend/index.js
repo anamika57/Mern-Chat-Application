@@ -1,10 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
+
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const {app ,server} =  require("./Socket/socket")
 dotenv.config();
-const app = express();
+
 
 const dbConnect = require("./DB/dbConnect");
 const authRouter = require("./rout/authUser");
@@ -26,11 +28,13 @@ app.use("/api/auth",authRouter)
 
 app.use("/api/message",messageRouter)
 app.use("/api/user",userRouter)
+
+
 app.get("/", (req, res) => {
   res.send("hello");
 });
 
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`server is listening on ${port}`);
 });
